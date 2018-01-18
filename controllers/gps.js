@@ -16,8 +16,13 @@ router.post('/', (req, res) => {
         } else {
             const country = resp.data.results[resp.data.results.length-1].formatted_address
 
-            res.json({
-                country: country
+            axios.get(`https://restcountries.eu/rest/v2/name/${country}`).then((cres) => {
+                res.json({
+                    country: country,
+                    currency: cres.data[0].currencies
+                })
+            }).catch((err) => {
+                console.log(err)
             })
         }
     }).catch((err) => {
