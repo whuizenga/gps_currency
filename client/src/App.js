@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
 
 class App extends Component {
+  constructor(){
+    super()
+    this.state={
+
+    }
+  }
+  _handleSubmit = (event) => {
+    event.preventDefault()
+
+    const latitude = event.target.latitude.value;
+    const longitude = event.target.longitude.value;
+    const apikey = event.target.apikey.value;
+
+    axios.post('/api/gps', {latitude, longitude, apikey}).then((res) => {
+      console.log(res)
+    })
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <form onSubmit={this._handleSubmit}>
+          <input name="latitude" type="number" step="0.000001" placeholder="latitude" required />
+          <input name="longitude" type="number" step="0.000001" placeholder="longitude" required />
+          <input name="apikey" type="text" placeholder="Google maps api key" required />
+          <button>Submit</button>
+        </form>
       </div>
     );
   }
