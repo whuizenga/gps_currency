@@ -23,10 +23,18 @@ router.post('/', (req, res) => {
                 })
             }).catch((err) => {
                 console.log(err)
+                res.json({
+                    error: 'an error has occurred fetching currency data',
+                    error_info: err
+                })
             })
         }
     }).catch((err) => {
         console.log(err)
+        res.json({
+            error: 'an error has occured determining country',
+            error_info: err
+        })
     })
 })
 module.exports = router;
